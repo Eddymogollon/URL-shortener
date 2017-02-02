@@ -76,7 +76,14 @@ router.get('/:short_url/', function(req, res) {
 	});
 
 	//This is a previous error, I do not know if it still occurs.
+	//Update: Bug seems to be fixed
 	console.log('There was an error with the short_url: parameter');
+});
+
+// Handle 404 - Keep this as a last route
+router.use(function(req, res, next) {
+    res.status(400);
+    res.send('404: Page Not Found');
 });
 
 module.exports = router;
