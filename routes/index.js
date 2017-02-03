@@ -12,7 +12,7 @@ function getUrl(req, res, port) {
 
 // Index
 router.get('/',function(req, res) {
-	console.log(`${getUrl(req, res, PORT)}/hola`);
+	console.log(`${getUrl(req, res, PORT)}/`);
     res.render('index');
 });
 
@@ -34,7 +34,7 @@ router.get('/new/:full_url(*)', function(req, res) {
 			// Then it is okay to create a new site and save it.
 			if (url == null) {
 				// generate a random id to shorten the url of the website
-				let url_id = shortid.generate();
+				let url_id = shortid.generate().slice(0, 5);
 
 				// create a new user called site and save it.
 				let site = new Url({
@@ -56,9 +56,8 @@ router.get('/new/:full_url(*)', function(req, res) {
 
 // Error page
 router.get('/new/', function(req, res) {
-	res.json({
-		"error": "Please add a url after /new/"
-	});
+    res.status(400);
+    res.send('404: Page Not Found');
 });
 
 //When the user writes a short_url in the router, it redirects to the original url.
@@ -71,13 +70,20 @@ router.get('/:short_url/', function(req, res) {
 				error: "The short link does not exist."
 		});
 		} else {
-			res.redirect(url.original_url);
+			let original_url = url.original_url;
+			let httpRegex = /http(s)?:\/\//;
+
+			// if http:// is not part of the original_url, add http:// add the beginning
+			!(httpRegex.test(original_url)) ?
+				res.redirect('http://' + original_url) : 
+				res.redirect(original_url);
+
 		}
-	});
+	});	
 
 	//This is a previous error, I do not know if it still occurs.
-	//Update: Bug seems to be fixed
-	console.log('There was an error with the short_url: parameter');
+	//When I go to index / it gives me this error, why?
+	//console.log('There was an error with the short_url: parameter');
 });
 
 // Handle 404 - Keep this as a last route
