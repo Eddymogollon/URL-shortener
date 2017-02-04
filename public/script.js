@@ -2,6 +2,7 @@ let $card = $('#card');
 let $long_url = $('#long-url');
 let $short_url = $('#short-url');
 
+
 //jQuery working, wohooo
 $(document).ready(function() {
 
@@ -12,8 +13,11 @@ $card.css("visibility", "visible");
 		event.preventDefault();
 		$card.fadeTo(0, 0);
 
+		let origin = window.location.origin;
+
 		let urlValue = $('#input-shorten').val();
-		let urlAPI = "http://localhost:3000/new/" + urlValue;
+		let urlAPI = `${origin}/new/${urlValue}`;
+		//let urlAPI = "http://localhost:5000/new/" + urlValue;
 
 		$.getJSON(urlAPI)
 		  .done(function(data) {

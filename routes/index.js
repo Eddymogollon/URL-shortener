@@ -3,16 +3,14 @@ const validator = require('validator');
 const shortid = require('shortid');
 const Url = require('./../models/url');
 const router = express.Router();
-const PORT = "3000";
 
-// Function to get the domain URL so code is DRY
-function getUrl(req, res, port) {
-	return `${req.protocol}://${req.hostname}:${PORT}`;
+function getUrl(req, res) {
+	return `${req.protocol}://${req.headers.host}`;
 }
 
 // Index
 router.get('/',function(req, res) {
-	console.log(`${getUrl(req, res, PORT)}/`);
+	console.log(`${getUrl(req, res)}/`);
     res.render('index');
 });
 
@@ -39,7 +37,7 @@ router.get('/new/:full_url(*)', function(req, res) {
 				// create a new user called site and save it.
 				let site = new Url({
 				  original_url: full_url, 	
-				  short_url: `${getUrl(req, res, PORT)}/${url_id}`
+				  short_url: `${getUrl(req, res)}/${url_id}`
 				});
 
 				site.saveSite();
@@ -62,7 +60,7 @@ router.get('/new/', function(req, res) {
 
 //When the user writes a short_url in the router, it redirects to the original url.
 router.get('/:short_url/', function(req, res) {
-	Url.findOne({short_url: `${getUrl(req, res, PORT)}/${req.params.short_url}`}).exec(function(err, url) {
+	Url.findOne({short_url: `${getUrl(req, res)}/${req.params.short_url}`}).exec(function(err, url) {
 		if (err) throw console.error(err);
 		
 		if (url == null) {

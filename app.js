@@ -5,11 +5,12 @@ const router = require('./routes/index');
 const mongoose = require('mongoose');
 const Url = require('./models/url');
 const path = require('path');
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
+const myMongoDB = process.env.MONGOLAB_URI || "mongodb://localhost:27017/website";
 const app = express();
 
 // mongodb connection
-mongoose.connect(`mongodb://localhost:27017/website`);
+mongoose.connect(myMongoDB);
 const db = mongoose.connection;
 // mongo error
 db.on('error', console.error.bind(console, 'connection error:'));
