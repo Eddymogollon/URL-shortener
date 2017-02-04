@@ -36,7 +36,7 @@ router.get('/new/:full_url(*)', function(req, res) {
 
 				// create a new user called site and save it.
 				let site = new Url({
-				  original_url: full_url, 	
+				  original_url: full_url.toLowerCase(), 	
 				  short_url: `${getUrl(req, res)}/${url_id}`
 				});
 
