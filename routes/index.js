@@ -16,7 +16,7 @@ router.get('/',function(req, res) {
 
 // Send JSON DB
 router.get('/new/:full_url(*)', function(req, res) {
-	let full_url = req.params.full_url;
+	let full_url = req.params.full_url.toLowerCase();
 	
 	//If it is NOT a valid URL
 	if (!validator.isURL(full_url)) {
@@ -36,7 +36,7 @@ router.get('/new/:full_url(*)', function(req, res) {
 
 				// create a new user called site and save it.
 				let site = new Url({
-				  original_url: full_url.toLowerCase(), 	
+				  original_url: full_url, 	
 				  short_url: `${getUrl(req, res)}/${url_id}`
 				});
 
