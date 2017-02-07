@@ -1,6 +1,7 @@
 # This is a URL Shortener app.
 
 Put a correct url, and it will save it on the database and it will give a new address to be redirected to.
+[Live version](https://urled.herokuapp.com)
 
 ##Features:
 1. If you give the program a URL already in the database, it will show you the same one.
