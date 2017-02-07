@@ -5,7 +5,7 @@ const router = require('./routes/index');
 const mongoose = require('mongoose');
 const Url = require('./models/url');
 const path = require('path');
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 8080;
 const myMongoDB = process.env.MONGODB_URI || "mongodb://localhost:27017/website";
 const app = express();
 
